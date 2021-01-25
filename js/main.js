@@ -130,9 +130,9 @@ function createTank(scene, data) {
     tank.position.y += 2;
     tank.speed = 1;
 
-    var boxParams = { height: 0.5, width: 3, depth: 3 };
-    var boxImpostorParams = { mass: 0, restitution: 0, friction: 0 };
-    tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.BoxImpostor, boxImpostorParams, scene);
+    //var boxParams = { height: 0.5, width: 3, depth: 3 };
+    //var boxImpostorParams = { mass: 1, restitution: 0, friction: 0 };
+    //tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.BoxImpostor, boxImpostorParams, scene);
 
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
 
@@ -218,7 +218,7 @@ function createTank(scene, data) {
 
         var cannonBall = new BABYLON.Mesh.CreateSphere("cannonBall", 32, 2, scene);
         cannonBall.material = new BABYLON.StandardMaterial("Fire", scene);
-        cannonBall.material.diffuseTexture = new BABYLON.Texture("images/Fire.jpg", scene);
+        cannonBall.material.diffuseTexture = new BABYLON.Texture("images/normal_map.jpg", scene);
         var pos = tank.position;
         cannonBall.position = new BABYLON.Vector3(pos.x, pos.y + 1, pos.z);
         cannonBall.position.addInPlace(tank.frontVector.multiplyByFloats(5, 5, 5));
