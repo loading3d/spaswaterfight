@@ -55,7 +55,6 @@ function startGame() {
     canvas = document.getElementById("renderCanvas");
     engine = new BABYLON.Engine(canvas, true);
     scene = createScene();
-    modifySettings();
     var tank = scene.getMeshByName("HeroTank");
     var toRender = function () {
         tank.move();
@@ -201,41 +200,6 @@ tank.move = function () {
 window.addEventListener("resize", function () {
     engine.resize();
 });
-
-function modifySettings() {
-    scene.onPointerDown = function () {
-        if (!scene.alreadyLocked) {
-            console.log("Requesting pointer lock");
-            canvas.requestPointerLock = canvas.requestPointerLock ||
-					canvas.msRequestPointerLock || canvas.mozRequestPointerLock ||
-					canvas.webkitRequestPointerLock;
-            canvas.requestPointerLock();
-        }
-        else {
-            console.log("Not requesting because we are already locked");
-        }
-    }
-    
-    document.addEventListener("pointerlockchange", pointerLockListener);
-    document.addEventListener("mspointerlockchange", pointerLockListener);
-    document.addEventListener("mozpointerlockchange", pointerLockListener);
-    document.addEventListener("webkitpointerlockchange", pointerLockListener);
-    
-    function pointerLockListener() {
-        var element = document.mozPointerLockElement || document.webkitPointerLockElement || document.msPointerLockElement || document.pointerLockElement || null;
-        
-        if (element) {
-            scene.alreadyLocked = true;
-        }
-        else {
-            scene.alreadyLocked = false;
-        }
-    }
-
-}
-
-
-
 
 document.addEventListener("keydown", function (event) {
     if (event.key == 'w' || event.key == 'W') {
