@@ -59,6 +59,7 @@ function startGame() {
     var tank = scene.getMeshByName("HeroTank");
     var toRender = function () {
         tank.move();
+        tank.fire();
         scene.render();
     }
     engine.runRenderLoop(toRender);
