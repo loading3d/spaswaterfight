@@ -68,6 +68,7 @@ function startGame() {
 var createScene = function () {
     
     var scene = new BABYLON.Scene(engine);
+    scene.enablePhysics();
     var ground = CreateGround(scene);
     var freeCamera = createFreeCamera(scene);
     var tank = createTank(scene);
