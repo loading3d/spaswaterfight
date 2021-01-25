@@ -14,9 +14,6 @@ var socket;
 var Game = {};
 var enemies = {};
 
-var physicsViewer = new BABYLON.Debug.PhysicsViewer();
-var physicsHelper = new BABYLON.PhysicsHelper(scene);
-
 function connectToServer() {
     socket = io.connect( { transports: ['websocket'], upgrade:false });
     socket.on("connect", function () {
@@ -136,7 +133,6 @@ function createTank(scene, data) {
     var boxParams = { height: 1, width: 6, depth: 6 };
     var boxImpostorParams = { mass: 1, restitution: 0, friction: 1 };
     tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.BoxImpostor, boxImpostorParams, scene);
-    physicsViewer.showImpostor(box.physicsImpostor);
 
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
 
