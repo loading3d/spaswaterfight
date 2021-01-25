@@ -131,7 +131,7 @@ function createTank(scene, data) {
     tank.speed = 1;
 
     var boxParams = { height: 0.5, width: 3, depth: 3 };
-    var boxImpostorParams = { mass: 1, restitution: 0, friction: 0 };
+    var boxImpostorParams = { mass: 0, restitution: 0, friction: 0 };
     tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.BoxImpostor, boxImpostorParams, scene);
 
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
