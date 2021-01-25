@@ -129,6 +129,7 @@ function createTank(scene, data) {
     tank.material = tankMaterial;
     tank.position.y += 2;
     tank.speed = 1;
+    tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
 
     tank.state = {
