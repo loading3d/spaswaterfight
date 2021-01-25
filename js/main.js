@@ -85,6 +85,7 @@ function CreateGround(scene) {
         groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
         ground.material = groundMaterial;
         ground.checkCollisions = true;
+        ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.HeightmapImpostor, { mass: 0 }, scene);
     }
     return ground;
 }
