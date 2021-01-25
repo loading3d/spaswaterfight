@@ -7,6 +7,7 @@ var isWPressed = false;
 var isSPressed = false;
 var isAPressed = false;
 var isDPressed = false;
+var isBPressed = false;
 document.addEventListener("DOMContentLoaded", connectToServer);
 
 var socket;
@@ -16,7 +17,7 @@ var enemies = {};
 function connectToServer() {
     socket = io.connect( { transports: ['websocket'], upgrade:false });
     socket.on("connect", function () {
-        console.log("connction estaplished successfully");
+        console.log("connction established successfully");
         
         socket.on("GetYourID", function (data) {
             Game.id = data.id;
@@ -82,7 +83,6 @@ function CreateGround(scene) {
         groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
         ground.material = groundMaterial;
         ground.checkCollisions = true;
-        console.log(ground);
     }
     return ground;
 }
