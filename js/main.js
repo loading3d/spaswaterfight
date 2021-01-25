@@ -77,7 +77,6 @@ var createScene = function () {
 
 function CreateGround(scene) {
     var ground = new BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/hmap1.png", 2000, 2000, 20, 0, 1000, scene, false, OnGroundCreated);
-    console.log(ground);
     function OnGroundCreated() {
         var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
         groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
@@ -106,8 +105,7 @@ function createFreeCamera(scene) {
     camera.keysRight.push('d'.charCodeAt(0));
     camera.keysRight.push('D'.charCodeAt(0));
     camera.keysLeft.push('a'.charCodeAt(0));
-    camera.keysLeft.push('A'.charCodeAt(0));
-    
+    camera.keysLeft.push('A'.charCodeAt(0));    
     return camera;
 }
 
@@ -129,36 +127,39 @@ function createTank(scene, data) {
     tank.position.y += 2;
     tank.speed = 1;
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
+
     tank.state = {
         id: Game.id,
-    x: tank.position.x,
-    y: tank.position.y,
-    z: tank.position.z,
-    rX: tank.rotation.x,
-    rY: tank.rotation.y,
-    rZ: tank.rotation.z
-}
-tank.setState = function(data)
-{
-    tank.position.x = data.x;
-    tank.position.y = data.y;
-    tank.position.z = data.z;
-    tank.rotation.x = data.rX;
-    tank.rotation.y = data.rY;
-    tank.rotation.z = data.rZ;
-}
+        x: tank.position.x,
+        y: tank.position.y,
+        z: tank.position.z,
+        rX: tank.rotation.x,
+        rY: tank.rotation.y,
+        rZ: tank.rotation.z
+    }
 
-if (data) {
-    tankMaterial.diffuseColor = new BABYLON.Color3.Yellow;
-    tankMaterial.emissiveColor = new BABYLON.Color3.Yellow;
-    enemies[data.id] = tank;
-    tank.setState(data);
-}
-else {
-    socket.emit("IWasCreated", tank.state);
-}
-tank.move = function () {
-    var notifyServer = false;
+    tank.setState = function(data)
+    {
+        tank.position.x = data.x;
+        tank.position.y = data.y;
+        tank.position.z = data.z;
+        tank.rotation.x = data.rX;
+        tank.rotation.y = data.rY;
+        tank.rotation.z = data.rZ;
+    }
+
+    if (data) {
+        tankMaterial.diffuseColor = new BABYLON.Color3.Yellow;
+        tankMaterial.emissiveColor = new BABYLON.Color3.Yellow;
+        enemies[data.id] = tank;
+        tank.setState(data);
+    }
+    else {
+        socket.emit("IWasCreated", tank.state);
+    }
+
+    tank.move = function () {
+        var notifyServer = false;
         var yMovement = 0;
         if (tank.position.y > 2) {
         tank.moveWithCollisions(new BABYLON.Vector3(0, -2, 0));
@@ -166,37 +167,37 @@ tank.move = function () {
         }
         
         if (isWPressed) {
-        tank.moveWithCollisions(tank.frontVector.multiplyByFloats(tank.speed, tank.speed, tank.speed));
-        notifyServer = true;
+            tank.moveWithCollisions(tank.frontVector.multiplyByFloats(tank.speed, tank.speed, tank.speed));
+            notifyServer = true;
         }
         if (isSPressed) {
             tank.moveWithCollisions(tank.frontVector.multiplyByFloats(-1 * tank.speed, -1 * tank.speed, -1 * tank.speed));
-        notifyServer = true;    
-    }
+            notifyServer = true;    
+        }
         if (isAPressed) {
             tank.rotation.y -= .1;
             tank.frontVector = new BABYLON.Vector3(Math.sin(tank.rotation.y), 0, Math.cos(tank.rotation.y))
-        notifyServer = true;
-    }
+            notifyServer = true;
+        }
         if (isDPressed) {
             tank.rotation.y += .1;
             tank.frontVector = new BABYLON.Vector3(Math.sin(tank.rotation.y), 0, Math.cos(tank.rotation.y))
-        notifyServer = true;
+            notifyServer = true;
         }
     
-    if (notifyServer) {
-        tank.state.x = tank.position.x;
-        tank.state.y = tank.position.y;
-        tank.state.z = tank.position.z;
-        tank.state.rX = tank.rotation.x;
-        tank.state.rY = tank.rotation.y;
-        tank.state.rZ = tank.rotation.z;
-        socket.emit("IMoved", tank.state);
-    }
-
+        if (notifyServer) {
+            tank.state.x = tank.position.x;
+                tank.state.y = tank.position.y;
+            tank.state.z = tank.position.z;
+            tank.state.rX = tank.rotation.x;
+            tank.state.rY = tank.rotation.y;
+            tank.state.rZ = tank.rotation.z;
+            socket.emit("IMoved", tank.state);
+        }
     }
     return tank;
 }
+
 window.addEventListener("resize", function () {
     engine.resize();
 });
