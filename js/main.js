@@ -129,7 +129,12 @@ function createTank(scene, data) {
     tank.material = tankMaterial;
     tank.position.y += 2;
     tank.speed = 1;
-    tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
+
+    var boxParams = { height: 1, width: 6, depth: 6 };
+    var boxImpostorParams = { mass: 1, restitution: 0, friction: 1 };
+    tank.physicsImpostor = new BABYLON.PhysicsImpostor(tank, BABYLON.PhysicsImpostor.BoxImpostor, boxImpostorParams, scene);
+    physicsViewer.showImpostor(box.physicsImpostor);
+
     tank.frontVector = new BABYLON.Vector3(0, 0, 1);
 
     tank.state = {
