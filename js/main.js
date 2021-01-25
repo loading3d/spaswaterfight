@@ -14,6 +14,9 @@ var socket;
 var Game = {};
 var enemies = {};
 
+var physicsViewer = new BABYLON.Debug.PhysicsViewer();
+var physicsHelper = new BABYLON.PhysicsHelper(scene);
+
 function connectToServer() {
     socket = io.connect( { transports: ['websocket'], upgrade:false });
     socket.on("connect", function () {
